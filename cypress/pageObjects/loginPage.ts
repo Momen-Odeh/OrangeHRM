@@ -1,54 +1,17 @@
 class loginPage
 {
     elements={
-        usernameInput : () => cy.get('input[name="userName"]'),//cy.get('[data-cy="submit"]')
-        passwordInput : () => cy.get('input[name="password"]'),    
-        loginBtn : () => cy.get('input[name="submit"]'),
-        successTxt : () => cy.get('h3'),
-        errorTxt : () => cy.get('span')
+        userName : () => cy.get(':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-input'),
+        password :() => cy.get(':nth-child(3) > .oxd-input-group > :nth-child(2) > .oxd-input'),
+        loginBtn : ()=> cy.get('.oxd-button')
     }
-    enterUsername(username:string)
-    {
-        this.elements.usernameInput().clear();
-        this.elements.usernameInput().type(username);
-    }
+    
+    checkLogin(userName:string,password:string){
+        this.elements.userName().type(userName);
+        this.elements.password().type(password);
+        this.elements.loginBtn().click()
 
-   enterPassword(password:string)
-    {
-        this.elements.passwordInput().clear();
-        this.elements.passwordInput().type(password);
     }
-  
-   clickSubmit() 
-    {
-        this.elements.loginBtn().click();
-    }
-
-    //get functions
-    get username()
-    {
-        return cy.get('input[name="userName"]');
-    }
-
-   get password()
-    {
-        return cy.get('input[name="password"]');
-    }
-
-   get submit()
-    {
-        return cy.get('input[name="submit"]');
-    }
-
-   get successText()
-    {
-        return cy.get('h3');
-    }
-
-   get errorText()
-   {
-       return cy.get('span');
-   }
 
 }
 export default loginPage; 
