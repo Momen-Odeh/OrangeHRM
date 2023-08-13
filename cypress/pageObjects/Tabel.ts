@@ -1,3 +1,4 @@
+import keyVal from "../interfaces/keyVal"
 class Table{
     element = {
         tableRecourde:() => cy.get('.oxd-table-body'),
@@ -21,24 +22,55 @@ class Table{
         })
         cy.log("all stored recourd : ==> ",this.recourde);
     }
-    getRecourde(key,value)
+
+
+    getRecourde(dataObj)
     {
-        let res =this.recourde.filter(x => x[key]==value)[0]
-        console.log("search on recourde",res)
+        
+        let res =this.recourde.filter((x) => {
+            let found = true
+                for (const key in dataObj) 
+                {
+                    if(x[key] != dataObj[key])
+                        {
+                            found =false; 
+                            break; 
+                        }
+                }
+                if(found) return x; 
+        })
         return res
     }
-    checkSearch(inputText,inputBtn,TableHeader,key:string,value:string)
+    checkSearch(TableHeader,...dataObjs:keyVal[])
     {
-        inputText.type(value);    
-        inputBtn//.click()
-        console.log("index")
-        let index:number = this.getRecourde(key,value).index;
-        
-        let i =1; 
-            for (const key1 in TableHeader) {
-                if(this.recourde[index][key1] != "")
-                    this.element.tableRecourde().children().eq(index).contains(this.recourde[index][key1])
+        let searchObj={}
+        for (const data of dataObjs)
+        {
+            searchObj={
+                ...searchObj,
+                [data.key]: data.value
             }
+            
+        }
+        console.log(searchObj);
+        let res = this.getRecourde(searchObj);
+        console.log(res);
+        for(let k=0;k<res.length;k++)
+        {
+            let i =0; 
+            for (const key1 in TableHeader) {
+                if(this.recourde[k][key1] != "")
+                    this.element.tableRecourde().children().eq(k).contains(this.recourde[k][key1])
+                        
+                    
+            }
+        }
+        // inputText.type(dataObj[0].value);    
+        // inputBtn.click({ force: true });
+        // console.log("index")
+        // 
+        // let resElements = this.element.tableRecourde().children(); 
+        
     }
 
     checkTabel(TableHeader)

@@ -12,12 +12,12 @@ describe("Test the admin tab",()=>{
             PIMobj.storeData();
         });
     })
-    it.only("search by user name",()=>{
-        cy.wrap(null).then(() => {
-            PIMobj.checkSearch("Id","0011");
-          });
+    // it.only("search by user name",()=>{
+    //     cy.wrap(null).then(() => {
+    //         PIMobj.checkSearch("Id","0011");
+    //       });
         
-    })
+    // })
     it.only("check the tabel",()=>{
         cy.wrap(null).then(() => {
             PIMobj.checkTabel();

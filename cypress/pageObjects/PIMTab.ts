@@ -22,10 +22,10 @@ class PIMtab {
     {
         tabelObj.storeRecourde(this.TableHeader);
     }
-    checkSearch(key,value)
-    {
-        tabelObj.checkSearch(this.elements.EId(),this.elements.searchBtn(),this.TableHeader,key,value)
-    }
+    // checkSearch(key,value)
+    // {
+    //     tabelObj.checkSearch(this.TableHeader,{key,value})
+    // }
     checkTabel(){
         tabelObj.checkTabel(this.TableHeader)
     }
