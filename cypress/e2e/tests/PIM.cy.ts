@@ -12,21 +12,21 @@ describe("Test the admin tab",()=>{
             PIMobj.storeData();
         });
     })
-    // it.only("search by user name",()=>{
-    //     cy.wrap(null).then(() => {
-    //         PIMobj.checkSearch({key:"Id",value:"0066"});
-    //       });
+    it.only("search by user name",()=>{
+        cy.wrap(null).then(() => {
+            PIMobj.checkSearch({key:"Id",value:"0066"});
+          });
         
-    // })
-    // it.only("check the tabel",()=>{
-    //     cy.wrap(null).then(() => {
-    //         PIMobj.checkTabel();
-    //       });
+    })
+    it.only("check the tabel",()=>{
+        cy.wrap(null).then(() => {
+            PIMobj.checkTabel();
+          });
         
-    // })
+    })
     it.only("add new Employee",()=>{
         cy.wrap(null).then(() => {
-            PIMobj.addNewEmployee("osama","othman","morad");
+            PIMobj.addNewEmployee("osama","othman","adnan");
           });
         
     })
