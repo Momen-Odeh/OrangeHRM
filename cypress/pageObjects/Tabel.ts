@@ -2,8 +2,10 @@ import keyVal from "../interfaces/keyVal"
 class Table{
     element = {
         tableRecourde:() => cy.get('.oxd-table-body'),
+        nextBtn:()=>cy.get(':nth-child(3) > .oxd-pagination-page-item')
     }
     recourde= []
+    
     storeRecourde(TableHeader)
     {
         this.element.tableRecourde().children().each(($el,index)=>{
@@ -20,14 +22,37 @@ class Table{
             }
             this.recourde.push(obj)
         })
+        let size =this.recourde.length
+        this.element.nextBtn().invoke('text').then((text) => {
+            if (!/\d/.test(text)) {
+              this.element.nextBtn().click();
+              this.element.tableRecourde().children().each(($el,index)=>{
+                let obj ={
+                    index:index+size, 
+                }
+                let i =1; 
+                for (const key in TableHeader) {
+                    obj={
+                        ...obj,
+                        [key]:$el.children().first().children()[i++].innerText
+                    }
+                    // console.log(`${key}: ${TableHeader[key]}`);
+                }
+                this.recourde.push(obj)
+            })
+            }
+        })   
+        
+        
+
         cy.log("all stored recourd : ==> ",this.recourde);
     }
 
 
-    getRecourde(dataObj)
+    getRecourdeFromStored(dataObj)
     {
         
-        let res =this.recourde.filter((x) => {
+        let res =this.recourde.filter((x,index) => {
             let found = true
                 for (const key in dataObj) 
                 {
@@ -37,7 +62,13 @@ class Table{
                             break; 
                         }
                 }
-                if(found) return x; 
+                if(found) {
+                    x={
+                        ...x,
+                        index
+                    }
+                    return x;
+                }
         })
         return res
     }
@@ -53,16 +84,14 @@ class Table{
             
         }
         console.log(searchObj);
-        let res = this.getRecourde(searchObj);
+        let res = this.getRecourdeFromStored(searchObj);
         console.log(res);
         for(let k=0;k<res.length;k++)
         {
             let i =0; 
             for (const key1 in TableHeader) {
                 if(this.recourde[k][key1] != "")
-                    this.element.tableRecourde().children().eq(k).contains(this.recourde[k][key1])
-                        
-                    
+                    this.element.tableRecourde().children().eq(k).contains(this.recourde[res[k].index][key1])
             }
         }
         // inputText.type(dataObj[0].value);    
@@ -76,7 +105,6 @@ class Table{
     checkTabel(TableHeader)
     {
         this.element.tableRecourde().children().each(($el,index)=>{
-            let i =1; 
             for (const key in TableHeader) {
                 // console.log(index)
                 if(this.recourde[index][key] != "")

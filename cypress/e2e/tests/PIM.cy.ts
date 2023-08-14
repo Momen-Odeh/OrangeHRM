@@ -14,13 +14,19 @@ describe("Test the admin tab",()=>{
     })
     // it.only("search by user name",()=>{
     //     cy.wrap(null).then(() => {
-    //         PIMobj.checkSearch("Id","0011");
+    //         PIMobj.checkSearch({key:"Id",value:"0066"});
     //       });
         
     // })
-    it.only("check the tabel",()=>{
+    // it.only("check the tabel",()=>{
+    //     cy.wrap(null).then(() => {
+    //         PIMobj.checkTabel();
+    //       });
+        
+    // })
+    it.only("add new Employee",()=>{
         cy.wrap(null).then(() => {
-            PIMobj.checkTabel();
+            PIMobj.addNewEmployee("osama","othman","morad");
           });
         
     })

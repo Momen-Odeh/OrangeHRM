@@ -14,7 +14,7 @@ describe("Test the admin tab",()=>{
     })
     it.only("search by user name",()=>{
         cy.wrap(null).then(() => {
-            adminObj.checkSearch({key:"Username",value:"Admin"});
+            adminObj.checkSearch({key:"Username",value:"Admin"},{key:"EmployeeName",value:"Paul Collings"});
           });
         
     })

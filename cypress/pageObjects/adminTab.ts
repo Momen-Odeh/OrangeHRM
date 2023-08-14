@@ -11,6 +11,7 @@ class admainTab{
         resetBtn :()=> cy.get('.oxd-button--ghost'),
         addBtn :()=>cy.get('.orangehrm-header-container > .oxd-button'),
         roleCombo:()=>cy.get(':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-select-wrapper > .oxd-select-text'),
+        EmployeeName:()=>cy.get('.oxd-autocomplete-text-input > input')
     }
     
     TableHeader ={ //enum
@@ -41,7 +42,11 @@ class admainTab{
             {
                 // this.element.useNameInput().type(arr[i].value);
                 this.element.roleCombo().children().eq(1).click({ force: true })
-                this.element.roleCombo().children().eq(0).type(arr[i].value)
+                this.element.roleCombo().children().eq(0).select(arr[i].value)
+            }
+            else if(arr[i].key == "EmployeeName")
+            {
+                this.element.EmployeeName().type(arr[i].value);
             }
             
         }
