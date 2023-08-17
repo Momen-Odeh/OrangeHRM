@@ -10,8 +10,11 @@ class admainTab{
         searchBtn :()=> cy.get('.oxd-form-actions > .oxd-button--secondary'),
         resetBtn :()=> cy.get('.oxd-button--ghost'),
         addBtn :()=>cy.get('.orangehrm-header-container > .oxd-button'),
-        roleCombo:()=>cy.get(':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-select-wrapper > .oxd-select-text'),
-        EmployeeName:()=>cy.get('.oxd-autocomplete-text-input > input')
+        roleCombo1:()=>cy.get(':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-select-wrapper > .oxd-select-text'),
+        roleCombo2:()=>cy.get(':nth-child(4) > .oxd-input-group > :nth-child(2) > .oxd-select-wrapper > .oxd-select-text'),
+        EmployeeName:()=>cy.get('.oxd-autocomplete-text-input > input'),
+        dropdownOption:()=>cy.get('.oxd-select-dropdown'),
+        autoComplete: ()=>cy.get('.oxd-autocomplete-dropdown'),
     }
     
     TableHeader ={ //enum
@@ -40,13 +43,18 @@ class admainTab{
             }
             else if(arr[i].key == "UserRole")
             {
-                // this.element.useNameInput().type(arr[i].value);
-                this.element.roleCombo().children().eq(1).click({ force: true })
-                this.element.roleCombo().children().eq(0).select(arr[i].value)
+                this.element.roleCombo1().click();
+                this.element.dropdownOption().contains(arr[i].value).click();
             }
             else if(arr[i].key == "EmployeeName")
             {
                 this.element.EmployeeName().type(arr[i].value);
+                this.element.autoComplete().contains(arr[i].value).click()
+            }
+            else if(arr[i].key == "Status")
+            {
+                this.element.roleCombo2().click();
+                this.element.dropdownOption().contains(arr[i].value).click();
             }
             
         }

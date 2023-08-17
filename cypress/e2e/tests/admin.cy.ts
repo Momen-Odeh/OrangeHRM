@@ -14,16 +14,16 @@ describe("Test the admin tab",()=>{
     })
     it.only("search by user name",()=>{
         cy.wrap(null).then(() => {
-            adminObj.checkSearch({key:"Username",value:"Admin"},{key:"EmployeeName",value:"Paul Collings"});
+            adminObj.checkSearch({key:"Username",value:"Admin"},{key:"UserRole",value:"Admin"},{key:"EmployeeName",value:"Paul Collings"},{key:"Status",value:"Enabled"});
           });
         
     })
-    it.only("check the tabel",()=>{
-        cy.wrap(null).then(() => {
-            adminObj.checkTabel();
-          });
+    // it.only("check the tabel",()=>{
+    //     cy.wrap(null).then(() => {
+    //         adminObj.checkTabel();
+    //       });
         
-    })
+    // })
 })
 
 

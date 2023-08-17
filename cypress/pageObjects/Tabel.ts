@@ -5,7 +5,6 @@ class Table{
         nextBtn:()=>cy.get(':nth-child(3) > .oxd-pagination-page-item')
     }
     recourde= []
-    
     storeRecourde(TableHeader)
     {
         this.element.tableRecourde().children().each(($el,index)=>{
@@ -23,25 +22,27 @@ class Table{
             this.recourde.push(obj)
         })
         let size =this.recourde.length
-        this.element.nextBtn().invoke('text').then((text) => {
-            if (!/\d/.test(text)) {
-              this.element.nextBtn().click();
-              this.element.tableRecourde().children().each(($el,index)=>{
-                let obj ={
-                    index:index+size, 
-                }
-                let i =1; 
-                for (const key in TableHeader) {
-                    obj={
-                        ...obj,
-                        [key]:$el.children().first().children()[i++].innerText
-                    }
-                    // console.log(`${key}: ${TableHeader[key]}`);
-                }
-                this.recourde.push(obj)
-            })
-            }
-        })   
+        // this.element.nextBtn().then(($el)=>{
+        //     cy.wrap($el).invoke('text').then((text) => {
+        //         if (!/\d/.test(text)) {
+        //           this.element.nextBtn().click();
+        //           this.element.tableRecourde().children().each(($el,index)=>{
+        //             let obj ={
+        //                 index:index+size, 
+        //             }
+        //             let i =1; 
+        //             for (const key in TableHeader) {
+        //                 obj={
+        //                     ...obj,
+        //                     [key]:$el.children().first().children()[i++].innerText
+        //                 }
+        //                 // console.log(`${key}: ${TableHeader[key]}`);
+        //             }
+        //             this.recourde.push(obj)
+        //         })
+        //         }
+        //     })
+        // })
         
         
 

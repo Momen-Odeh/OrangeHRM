@@ -15,6 +15,7 @@ describe("Test the admin tab",()=>{
     it.only("search by user name",()=>{
         cy.wrap(null).then(() => {
             PIMobj.checkSearch({key:"Id",value:"0066"});
+            
           });
         
     })
