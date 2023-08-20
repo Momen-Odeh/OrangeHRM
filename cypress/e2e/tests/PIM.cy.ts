@@ -27,7 +27,7 @@ describe("Test the admin tab",()=>{
     })
     it.only("add new Employee",()=>{
         cy.wrap(null).then(() => {
-            PIMobj.addNewEmployee("osama","othman","adnan");
+            PIMobj.addNewEmployee("osama","othman","Rami");
           });
         
     })
