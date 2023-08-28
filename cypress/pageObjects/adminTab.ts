@@ -1,6 +1,6 @@
 import Table from "./Tabel";
 import keyVal from "../interfaces/keyVal";
-const tabelObj:Table = new Table()
+const tableObj:Table = new Table()
 
 class admainTab{
     element={
@@ -32,7 +32,7 @@ class admainTab{
     }
     storeRecourde()
     {
-        tabelObj.storeRecourde(this.TableHeader);
+        tableObj.storeRecourde(this.TableHeader);
     }
     checkSearch(...arr:keyVal[])
     {
@@ -59,19 +59,34 @@ class admainTab{
             
         }
         this.element.searchBtn().click({ force: true })
-        tabelObj.checkSearch(this.TableHeader,...arr)
+        tableObj.checkSearch(this.TableHeader,...arr)
     }
 
     checkTabel()
     {
-        tabelObj.checkTabel(this.TableHeader)
+        tableObj.checkTabel(this.TableHeader)
     }
 
-
-    
-    
-    
-    
+    addUserByAPI()
+    {
+        let data = {username: "mohsen", password: "1234567mM", status: true, userRoleId: 1, empNumber: 2}
+        
+        cy.request("POST","https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/auth/public/validation/password",{password: data.password})
+        .then((res) => {
+        const responseBody = res.body;
+        console.log(responseBody);
+        expect(res.status).to.equal(200)
+        cy.request(`https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/admin/validation/user-name?userName=${data.username}`)
+        .then((res2)=>{
+            expect(res2.status).to.equal(200)
+            cy.request("POST","https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/admin/users",data).then((res3)=>{
+                expect(res3.status).to.equal(200)
+            })
+        })
+        this.checkSearch({key:"Username",value:data.username});
+        tableObj.element.tableRecourde().children().eq(0).children().first().contains(data.username)
+      });
+    }
 }
 
 export default admainTab

@@ -1,6 +1,6 @@
 import Table from "./Tabel"
 import keyVal from "../interfaces/keyVal"
-const tabelObj:Table = new Table()
+const tableObj:Table = new Table()
 class PIMtab {
     elements ={
         PIMbtn :()=> cy.get(':nth-child(2) > .oxd-main-menu-item'),
@@ -23,7 +23,7 @@ class PIMtab {
 
         this.elements.saveNewEmp().click({force:true})
             cy.visit("https://opensource-demo.orangehrmlive.com/web/index.php/pim/viewEmployeeList");
-            tabelObj.checkSearch(this.TableHeader,{key:"FirstName",value:firstName+" "+MiddleName},{key:"LastName",value:lastName});
+            tableObj.checkSearch(this.TableHeader,{key:"FirstName",value:firstName+" "+MiddleName},{key:"LastName",value:lastName});
 
 
     }
@@ -41,7 +41,7 @@ class PIMtab {
     }
     storeData()
     {
-        tabelObj.storeRecourde(this.TableHeader);
+        tableObj.storeRecourde(this.TableHeader);
     }
     checkSearch(...arr:keyVal[])
     {
@@ -61,10 +61,23 @@ class PIMtab {
             
         }
         this.elements.searchBtn().click({ force: true })
-        tabelObj.checkSearch(this.TableHeader,...arr)
+        tableObj.checkSearch(this.TableHeader,...arr)
     }
     checkTabel(){
-        tabelObj.checkTabel(this.TableHeader)
+        tableObj.checkTabel(this.TableHeader)
+    }
+    addUserByAPI()
+    {
+        let data = {firstName: "Momen", middleName: "Hasan", lastName: "Odeh", empPicture: null, employeeId: "02023"}
+        cy.request("POST","https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/pim/employees",data)
+        .then((res) => {
+        const responseBody = res.body;
+        console.log(responseBody);
+        expect(res.status).to.equal(200)
+        this.checkSearch({key:"Id",value:data.employeeId});
+        tableObj.element.tableRecourde().children().eq(0).children().first().contains(data.employeeId)
+        tableObj.element.tableRecourde().children().eq(0).children().first().contains(data.firstName+" "+data.middleName)
+      });
     }
 } 
 
