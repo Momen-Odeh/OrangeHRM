@@ -10,7 +10,7 @@ describe("Test the admin tab",()=>{
     })
     it.only("test add user in admin tab",()=>
     {
-        let data = {username: "EmadAhmad", password: "1234567mM", status: true, userRoleId: 1, empNumber: 49}
+        let data = {username: "hani", password: "1234567mM", status: true, userRoleId: 1, empNumber: 49}
         
         cy.request("POST","https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/auth/public/validation/password",{password: data.password})
         .then((res) => {

@@ -4,7 +4,6 @@ describe('check the ogin page', () => {
   beforeEach(function() {
     cy.intercept('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login').as('loginPage');
     cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
-    // cy.wait('@loginPage');
       
  })
   it.only('check the login form', () => {
