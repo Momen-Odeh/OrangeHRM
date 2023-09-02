@@ -11,8 +11,8 @@ class PIMtab {
         addEmp:()=>cy.get('.orangehrm-header-container > .oxd-button'),
         EmployeeInputName:()=>cy.get('.--name-grouped-field'),
         saveNewEmp:()=>cy.get('.oxd-button--secondary')
-
     }
+    urlAddUser = "https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/pim/employees"
     addNewEmployee(firstName:string,MiddleName:string,lastName:string)
     {
         this.elements.addEmp().click({force:true});
@@ -69,7 +69,7 @@ class PIMtab {
     addUserByAPI()
     {
         let data = {firstName: "Momen", middleName: "Hasan", lastName: "Odeh", empPicture: null, employeeId: "02023"}
-        cy.request("POST","https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/pim/employees",data)
+        cy.request("POST",this.urlAddUser,data)
         .then((res) => {
         const responseBody = res.body;
         console.log(responseBody);

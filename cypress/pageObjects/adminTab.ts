@@ -1,7 +1,13 @@
 import Table from "./Tabel";
 import keyVal from "../interfaces/keyVal";
+import userPayload from "./userPayload";
 const tableObj:Table = new Table()
-
+interface addRequiest {
+    Username:String,
+        UserRole:String,
+        EmployeeName:String,
+        Status:String,
+}
 class admainTab{
     element={
         admainBtn:()=>cy.get(':nth-child(1) > .oxd-main-menu-item'),
@@ -16,8 +22,10 @@ class admainTab{
         dropdownOption:()=>cy.get('.oxd-select-dropdown'),
         autoComplete: ()=>cy.get('.oxd-autocomplete-dropdown'),
     }
-    
-    TableHeader ={ //enum
+    urlValidatePassword = "https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/auth/public/validation/password"
+    urlValidateUserName = "https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/admin/validation/user-name?userName="
+    urlAddUser = "https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/admin/users"
+    TableHeader:addRequiest ={ //enum
         Username:"Username",
         UserRole:"UserRole",
         EmployeeName:"EmployeeName",
@@ -67,24 +75,23 @@ class admainTab{
         tableObj.checkTabel(this.TableHeader)
     }
 
-    addUserByAPI()
+    addUserByAPI(userBody:userPayload)
     {
-        let data = {username: "mohsen", password: "1234567mM", status: true, userRoleId: 1, empNumber: 2}
-        
-        cy.request("POST","https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/auth/public/validation/password",{password: data.password})
+        cy.request("POST",this.urlValidatePassword,{password: userBody.password})
         .then((res) => {
         const responseBody = res.body;
         console.log(responseBody);
         expect(res.status).to.equal(200)
-        cy.request(`https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/admin/validation/user-name?userName=${data.username}`)
-        .then((res2)=>{
-            expect(res2.status).to.equal(200)
-            cy.request("POST","https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/admin/users",data).then((res3)=>{
-                expect(res3.status).to.equal(200)
+        cy.request(`${this.urlValidateUserName}${userBody.username}`)
+            .then((res2)=>{
+                expect(res2.status).to.equal(200)
+                cy.request("POST",this.urlAddUser,userBody)
+                .then((res3)=>{
+                    expect(res3.status).to.equal(200)
+                })
             })
-        })
-        this.checkSearch({key:"Username",value:data.username});
-        tableObj.element.tableRecourde().children().eq(0).children().first().contains(data.username)
+        this.checkSearch({key:"Username",value:userBody.username});
+        tableObj.element.tableRecourde().children().eq(0).children().first().contains(userBody.username)
       });
     }
 }

@@ -1,5 +1,6 @@
 import adminTab from "../../pageObjects/adminTab";
 import loginPage from "../../pageObjects/loginPage";
+import userPayload from "../../pageObjects/userPayload";
 const adminObj:adminTab = new adminTab (); 
 const loginObj:loginPage = new loginPage();
 describe("Test the admin tab",()=>{
@@ -10,7 +11,14 @@ describe("Test the admin tab",()=>{
     })
     it.only("test add user in admin tab",()=>
     {
-        adminObj.addUserByAPI()
+        let data:userPayload = {
+            username: "mohsenEmad",
+            password: "1234567mM", 
+            status: true, 
+            userRoleId: 1, 
+            empNumber: 2
+        }
+        adminObj.addUserByAPI(data)
     }
 )
 })
